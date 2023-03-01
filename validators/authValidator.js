@@ -16,3 +16,12 @@ export const userSignupValidator = [
        .isLength({min: 6, max: 12})
        .withMessage('password must be at least 6 characters long and not over 12 characters '),
  ]
+
+ export const userSigninValidator = [
+    check('email')
+        .isEmail()
+        .withMessage('must be a valid email address'),
+  check('password')
+        .isLength({min: 6, max: 12})
+        .withMessage('password must be at least 6 characters long and not over 12 characters ')
+]

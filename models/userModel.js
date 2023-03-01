@@ -50,6 +50,9 @@ const userSchema = new Schema({
     },
     updatedAt:{
         type: Date,
+    },
+    lastSeenAt:{
+        type: Date,
     }
 
 },

@@ -39,6 +39,30 @@ const registerUserCtrl = asyncHandler(async (req, res) => {
   }
 });
 
+const loginUserCtrl = asyncHandler(async (req, res) =>{
+  const {email, password } = req.body 
+  const user = await User.findOne({ email });
+  if (user && (await user.authenticate(password))) {
+    await User.findByIdAndUpdate(user._id, {
+      lastSeenAt: Date.now(),
+    })
+    user.hashed_password = undefined
+    user.salt = undefined
+
+    res.json({     
+      token: generateToken(user._id),
+      user
+    });
+  } else {
+    res.status(401);
+    throw new Error("Invalid email or password");
+  }
+
+
+})
+
+
 export {
-    registerUserCtrl
+    registerUserCtrl,
+    loginUserCtrl
 }
