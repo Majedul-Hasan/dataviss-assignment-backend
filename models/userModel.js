@@ -57,6 +57,40 @@ const userSchema = new Schema({
 },
 { timestamps: true })
 
-const User = mongoose.model("User", userSchema);
+userSchema.virtual('password')
+    .set(function(password){
+        // a temporary variable "_password" 
+        this._password = password
+        // generate salt
+        this.salt = this.makeSalt()
+        //encript password
+        this.hashed_password = this.encryptPassword(password)   // set this hashed_password by #encryptPassword method
+    })
+    .get(function(){    //get method
+        return this._password  
+    })
 
+// make salt && encryptPassword
+userSchema.methods = {
+    authenticate: function(plainText){
+        return this.encryptPassword(plainText) === this.hashed_password
+
+    },
+        encryptPassword: function(password){
+        if(!password) return ""
+        try {
+            return crypto
+                .createHmac('sha1', this.salt)
+                .update(password)
+                .digest('hex')            
+        } catch (err) {
+            return ""
+        }
+    },
+    makeSalt: function(){
+        return Math.round(new Date().valueOf()*Math.random()) + "";
+    }
+}
+
+const User = mongoose.model("User", userSchema);
 export default User;
