@@ -33,7 +33,7 @@ Represents Mandatory Field)
 2. Middle Name
 3. Last Name*
 4. Email*
-5. Password (Encrypted)*
+✅ Password (Encrypted)*
 6. Role (Admin or User)*
 7. Department
 8. Created Time*

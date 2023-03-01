@@ -1,18 +1,8 @@
-const crypto = require('crypto'); // crypto is a built-in Node module
+import crypto from 'crypto'; // crypto is a built-in Node module
 import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const userSchema = new Schema({
-    username:{
-        type : String,
-        trim: true, //white space trimed out
-        required: true,
-        max: 32,
-        unique:true,
-        index: true, //make it indexing
-        lowercase: true
-
-    },
     firstName:{
         type : String,
         trim: true, //white space tremed out
@@ -44,14 +34,22 @@ const userSchema = new Schema({
     salt:{
         type: String
     },
-    role:{
-        type: Number,
-        default: 0 // 0 => user role, 1 => admin role
-
+    isAdmin: {
+        type: Boolean,
+        default: false,
+      },
+    Department:{
+        type : String,
     },
     photo:{
         data: Buffer, // binary data type
         contentType: String
+    },
+    createdAt:{
+        type: Date,
+    },
+    updatedAt:{
+        type: Date,
     }
 
 },
