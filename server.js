@@ -10,7 +10,7 @@ dotenv.config();
 const app = express()
 // database connect
 connectDB()
-// middlewares
+// middleware
 app.use(morgan('dev'))
 app.use(express.json()); //this allows json to the body
 app.use(cors()) // allows all requests from cross-domain
