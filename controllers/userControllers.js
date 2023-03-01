@@ -20,6 +20,7 @@ const registerUserCtrl = asyncHandler(async (req, res) => {
     email,
     password,
     createdAt: Date.now(),
+    isOnline: true
   });
 
   if (user) {
@@ -45,9 +46,11 @@ const loginUserCtrl = asyncHandler(async (req, res) =>{
   if (user && (await user.authenticate(password))) {
     await User.findByIdAndUpdate(user._id, {
       lastSeenAt: Date.now(),
-    })
+      isOnline: true
+    }, {new: true})
     user.hashed_password = undefined
     user.salt = undefined
+    user.isOnline = true
 
     res.json({     
       token: generateToken(user._id),
@@ -57,12 +60,29 @@ const loginUserCtrl = asyncHandler(async (req, res) =>{
     res.status(401);
     throw new Error("Invalid email or password");
   }
+})
 
+// sign out ctrl
+const signoutUserCtrl =asyncHandler(async (req, res) =>{
+  const user  = await User.findById(req.auth.id);
+  // console.log(user);
+  if (user){
+    await User.findByIdAndUpdate(user._id, {
+      lastSeenAt: Date.now(),
+      isOnline: false
+    })
+    res.json({
+      message: 'Signout success!'
+ })
+  }
+   
 
 })
 
 
+
 export {
     registerUserCtrl,
-    loginUserCtrl
+    loginUserCtrl,
+    signoutUserCtrl
 }
