@@ -3,6 +3,16 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const userSchema = new Schema({
+    username:{
+        type : String,
+        trim: true, //white space trimed out
+        required: true,
+        max: 32,
+        unique:true,
+        index: true, //make it indexing
+        lowercase: true
+
+    },
     firstName:{
         type : String,
         trim: true, //white space tremed out
@@ -38,8 +48,10 @@ const userSchema = new Schema({
         type: Boolean,
         default: false,
       },
-    Department:{
+    department:{
         type : String,
+        default: 'user',
+
     },
     photo:{
         data: Buffer, // binary data type

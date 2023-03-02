@@ -3,17 +3,17 @@
 
 ASSIGNMENT FOR BACKEND DEVELOPER
 # Instructions
-1) Use NodeJs for Backend and MongoDB for Database.
-2) Use Proper commenting and Naming conventions should be meaningful. 3)
-Reusable code functionality would be expected.
+✅ Use NodeJs for Backend and MongoDB for Database.
+✅ Use Proper commenting and Naming conventions should be meaningful. 
+✅ Reusable code functionality would be expected.
 4) MVC Pattern should be followed.
-5) ECMAScript 2015 version would be preferred.
-6) The code should be efficient and follow best practices.
-7) Always Use ‘mongoose’ instead of ‘mongodb’ npm package.
+✅ ECMAScript 2015 version would be preferred.
+✅ The code should be efficient and follow best practices.
+✅ Always Use ‘mongoose’ instead of ‘mongodb’ npm package.
 # Before Start Working on it,
-1) Create a public GitHub repository.
-2) Share the repository with us.
-3) For Every concept completion should be pushed in GitHub with proper commit
+✅ Create a public GitHub repository.
+✅ Share the repository with us.
+✅ For Every concept completion should be pushed in GitHub with proper commit
 message. For bug fixing also, should have proper commit message.
 # Assignment
 We have to create Restful APIs for User Profile Management, with functionalities, (Note : You
@@ -25,22 +25,22 @@ can use your own flexibility in splitting or grouping APIs)
 5. Update User
 6. View User
 # Model
-(Note 1 : Both Admin and User holds same model)
-(Note 2 : All Admin and User details should be stored in one place in database) (Note 3 : *
+✅(Note 1 : Both Admin and User holds same model)
+✅(Note 2 : All Admin and User details should be stored in one place in database) (Note 3 : *
 Represents Mandatory Field)
 (Note 4 : Naming Conventions are up to you.)
-1. First Name*
-2. Middle Name
-3. Last Name*
-4. Email*
+✅ First Name*
+✅ Middle Name
+✅ Last Name*
+✅ Email*
 ✅ Password (Encrypted)*
-6. Role (Admin or User)*
-7. Department
-8. Created Time*
-9. Updated Time*
+✅ Role (Admin or User)*
+✅ Department
+✅ Created Time*
+✅ Updated Time*
 # Add Admin or User
-1. All Mandatory fields should be present.
-2. Password should have 6 to 12 characters.
+✅ All Mandatory fields should be present.
+✅ Password should have 6 to 12 characters.
 3. Confirm password should also be present in adding User/Admin.
 4. Created Time and Updated Time should be auto-generated.
 5. Admin can add Admin/User. User can add user only.

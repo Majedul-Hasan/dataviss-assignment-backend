@@ -1,20 +1,29 @@
 import asyncHandler from "express-async-handler";
 import User from "../models/userModel.js";
 import generateToken from "../utils/generateToken.js";
+import shortId from "shortid";
+
 
 
 
 
 const registerUserCtrl = asyncHandler(async (req, res) => {
-  const { firstName, middleName, lastName, email, password } = req.body;
+  const { firstName, middleName, lastName, email, password, confirmPassword} = req.body;
+  if(confirmPassword !== password){
+     res.status(400)
+    throw new Error("password should match");
+  }
 
   const userExist = await User.findOne({ email });
   if (userExist) {
     res.status(400);
     throw new Error("User with this email already exists. Please login");
+   
   }
+  let username = shortId.generate();
   const user = await User.create({
     firstName,
+    username,
     middleName,
     lastName,
     email,
@@ -78,11 +87,64 @@ const signoutUserCtrl =asyncHandler(async (req, res) =>{
    
 
 })
+// all user ctrl
+const fetchAllUserCtrl =asyncHandler(async (req, res) =>{
+  try {
+    const loggedInUser = await User.findById(req.auth.id)
+    // console.log(loggedInUser);
+    if(loggedInUser.isAdmin){
+      const users = await User.find().select('-hashed_password -salt');
+      res.json(users);    
+
+    } else{
+      const users = await User.find({isAdmin: false})
+      .select('-hashed_password -salt')
+      res.json(users); 
+    }
+  } catch (error) {
+    res.status(500);
+    throw new Error("something went wrong");
+  }
+   
+
+})
+// update user ctrl
+const updateUserCtrl = asyncHandler(async (req, res) =>{
+  // console.log(Object.keys(req.body) );
+  const bodyKeys = Object.keys(req.body)
+  if (bodyKeys.includes('password')){
+    res.status(500);
+    throw new Error("you can not update your password");
+  }
+  const user = await User.findById( req.auth.id)
+  if (user){
+    (user.firstName = req.body.firstName || user.firstName),
+    (user.middleName = req.body.middleName || user.middleName);
+    (user.lastName = req.body.lastName || user.lastName),
+    (user.email = req.body.email || user.email);
+    (user.Department = req.body.Department || user.Department);  
+    (user.updatedAt = Date.now());  
+
+
+    const updatedUser = await user.save(); 
+    updatedUser.hashed_password = undefined
+    updatedUser.salt = undefined
+   
+    res.status(201).json(updatedUser)
+  }else {
+    res.status(404);
+    throw new Error("User not found");
+  }
+})
+
+
 
 
 
 export {
     registerUserCtrl,
     loginUserCtrl,
-    signoutUserCtrl
+    signoutUserCtrl,
+    fetchAllUserCtrl,
+    updateUserCtrl
 }
