@@ -137,6 +137,27 @@ const updateUserCtrl = asyncHandler(async (req, res) =>{
   }
 })
 
+// all user ctrl
+const fetchAnUserCtrl =asyncHandler(async (req, res) =>{
+  const {id} = req.params
+  try {
+    const loggedInUser = await User.findById(req.auth.id)
+    const user = await User.findById(id).select('-hashed_password -salt');
+    // console.log(loggedInUser);
+    if(!loggedInUser.isAdmin && user.isAdmin){
+      res.status(500);
+      throw new Error("admin only"); 
+    } else{      
+      res.json(user); 
+    }
+  } catch (error) {
+    res.status(500);
+    throw new Error("something went wrong");
+  }
+   
+
+})
+
 
 
 
@@ -146,5 +167,6 @@ export {
     loginUserCtrl,
     signoutUserCtrl,
     fetchAllUserCtrl,
-    updateUserCtrl
+    updateUserCtrl,
+    fetchAnUserCtrl
 }

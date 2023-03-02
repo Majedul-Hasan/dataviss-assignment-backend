@@ -7,9 +7,10 @@ import {
     loginUserCtrl,
     signoutUserCtrl,
     fetchAllUserCtrl,
-    updateUserCtrl
+    updateUserCtrl,
+    fetchAnUserCtrl
 } from "../controllers/userControllers.js";
-import { authMiddleware } from "../middleware/authMiddleware.js";
+
 const router = express.Router();
 
 // @ routs '/users'
@@ -20,6 +21,7 @@ router.route("/signout").post(requiredSignIn, signoutUserCtrl)
 
 
 router.route("/").get(requiredSignIn, fetchAllUserCtrl)
+router.route("/:id").get(requiredSignIn, fetchAnUserCtrl)
 
 router.route("/").put(requiredSignIn,  updateUserCtrl)
 

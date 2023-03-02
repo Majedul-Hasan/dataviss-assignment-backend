@@ -42,7 +42,7 @@ Represents Mandatory Field)
 ✅ All Mandatory fields should be present.
 ✅ Password should have 6 to 12 characters.
 3. Confirm password should also be present in adding User/Admin.
-4. Created Time and Updated Time should be auto-generated.
+✅  Created Time and Updated Time should be auto-generated.
 5. Admin can add Admin/User. User can add user only.
 # Update Admin or User
 1. Admin/User can edit any field. If 1 field given means, that particular field
@@ -57,8 +57,8 @@ himself.
 # View Admin or User
 1. Admin/User can view any field. If 1 field given means, that particular field
 should view. If nothing mentioned means, all details should display.
-2. Password should not be display for any User/Admin.
-3. An Admin can view Admins/Users and himself. A User can view Users and
+✅  Password should not be display for any User/Admin.
+✅  An Admin can view Admins/Users and himself. A User can view Users and
 himself.
 #User Activity logs
 1. Save Last Login Details of the user using help of socketio package
