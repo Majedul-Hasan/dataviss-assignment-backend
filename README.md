@@ -18,9 +18,9 @@ message. For bug fixing also, should have proper commit message.
 # Assignment
 We have to create Restful APIs for User Profile Management, with functionalities, (Note : You
 can use your own flexibility in splitting or grouping APIs)
-1. Add Admin
-2. Update Admin
-3. View Admin
+✅ Add Admin
+✅ Update Admin
+✅ View Admin
 4. Add User
 5. Update User
 6. View User

@@ -137,7 +137,7 @@ const updateUserCtrl = asyncHandler(async (req, res) =>{
   }
 })
 
-// all user ctrl
+// An user ctrl
 const fetchAnUserCtrl =asyncHandler(async (req, res) =>{
   const {id} = req.params
   try {
@@ -157,8 +157,66 @@ const fetchAnUserCtrl =asyncHandler(async (req, res) =>{
    
 
 })
+// update Admin Ctrl 
+const updateAdminCtrl =asyncHandler(async (req, res) =>{
+  const {id} = req.params
+  try {
+    const loggedInUser = await User.findById(req.auth.id)
+    const user = await User.findById(id).select('-hashed_password -salt');
+    // console.log(loggedInUser);
+    if(!loggedInUser.isAdmin){
+      res.status(500);
+      throw new Error("admin only"); 
+    } else{
+      if (user){        
+        (user.isAdmin = req.body.isAdmin || user.isAdmin);  
+        (user.updatedAt = Date.now());     
+    
+        const updatedUser = await user.save(); 
+        updatedUser.hashed_password = undefined
+        updatedUser.salt = undefined       
+        res.status(201).json(updatedUser)
+      }else {
+        res.status(404);
+        throw new Error("User not found");
+      }
+      
 
 
+
+
+
+
+    }
+  } catch (error) {
+    res.status(500);
+    throw new Error("something went wrong");
+  }
+   
+
+})
+
+// all admin user ctrl
+const fetchAllAdminUserCtrl =asyncHandler(async (req, res) =>{
+  try {
+    const loggedInUser = await User.findById(req.auth.id)
+    // console.log(loggedInUser);
+    if(loggedInUser.isAdmin){
+      const admins = await User.find({isAdmin: true}).select('-hashed_password -salt');
+      res.json(admins);    
+
+    } else{
+      res.status(500);
+      throw new Error("admin only");
+     
+    }
+  } catch (error) {
+    res.status(500);
+    throw new Error("something went wrong");
+  }
+   
+
+})
 
 
 
@@ -168,5 +226,7 @@ export {
     signoutUserCtrl,
     fetchAllUserCtrl,
     updateUserCtrl,
-    fetchAnUserCtrl
+    fetchAnUserCtrl,
+    updateAdminCtrl,
+    fetchAllAdminUserCtrl
 }
